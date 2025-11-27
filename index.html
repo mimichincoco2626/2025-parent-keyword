@@ -243,7 +243,7 @@
 
             // --- 畫面元件 ---
             const StartScreen = () => (
-                <div className="flex flex-col items-center justify-center min-h-[500px] h-full text-center space-y-12 animate-fade-in px-6 py-10">
+                <div className="flex flex-col items-center justify-start min-h-[500px] h-full text-center space-y-12 animate-fade-in px-6 pt-24 pb-12">
                     <div className="space-y-6">
                         <h1 className="text-4xl md:text-5xl font-black text-white font-serif tracking-widest leading-relaxed drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]">
                             父母年度<br/>
@@ -274,7 +274,7 @@
                 const progress = ((currentQuestionIdx + 1) / questions.length) * 100;
 
                 return (
-                    <div className="flex flex-col h-full min-h-[600px] max-w-lg mx-auto w-full px-6 py-8 justify-center">
+                    <div className="flex flex-col h-full min-h-[600px] max-w-lg mx-auto w-full px-6 py-8 justify-start pt-20">
                         <div className="w-full bg-white/10 h-1 rounded-full mb-10 overflow-hidden shrink-0">
                             <div 
                                 className="bg-amber-400 h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(251,191,36,0.5)]"
@@ -282,7 +282,7 @@
                             ></div>
                         </div>
 
-                        <div className="flex-1 flex flex-col justify-center">
+                        <div className="flex-1 flex flex-col justify-start">
                             <div className="mb-10 text-center md:text-left">
                                 <span className="inline-block px-3 py-1 bg-amber-400/10 border border-amber-400/20 text-amber-400 text-xs font-bold tracking-widest rounded-full mb-6">
                                     Q{currentQuestionIdx + 1}
@@ -494,7 +494,7 @@
             };
 
             return (
-                <div className="w-full max-w-md min-h-screen bg-[#110c46] relative flex flex-col mx-auto">
+                <div className="w-full max-w-md min-h-[700px] bg-[#110c46] relative flex flex-col mx-auto">
                     <div className="absolute inset-0 pointer-events-none opacity-40 fixed" style={{ 
                         backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px)`,
                         backgroundSize: '30px 30px'
