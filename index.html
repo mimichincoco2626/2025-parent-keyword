@@ -23,6 +23,8 @@
             font-family: 'Noto Serif TC', serif;
             background-color: #110c46;
             color: #1c1917;
+            margin: 0;
+            padding: 0;
         }
         .font-serif {
             font-family: 'Noto Serif TC', serif;
@@ -30,10 +32,6 @@
         .writing-vertical {
             writing-mode: vertical-rl;
             text-orientation: upright;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
         }
         .animate-fade-in {
             animation: fadeIn 0.8s ease-out forwards;
@@ -50,7 +48,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // --- SVG 圖示元件 (取代 lucide-react) ---
+        // --- SVG 圖示元件 ---
         const ChevronRight = ({ size = 24, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"/></svg>
         );
@@ -225,7 +223,7 @@
 
             // --- 畫面元件 ---
             const StartScreen = () => (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-12 animate-fade-in px-6">
+                <div className="flex flex-col items-center justify-center min-h-[500px] h-full text-center space-y-12 animate-fade-in px-6 py-10">
                     <div className="space-y-6">
                         <h1 className="text-4xl md:text-5xl font-black text-white font-serif tracking-widest leading-relaxed drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]">
                             父母年度<br/>
@@ -256,8 +254,8 @@
                 const progress = ((currentQuestionIdx + 1) / questions.length) * 100;
 
                 return (
-                    <div className="flex flex-col h-full max-w-lg mx-auto w-full px-6 py-8">
-                        <div className="w-full bg-white/10 h-1 rounded-full mb-10 overflow-hidden">
+                    <div className="flex flex-col h-full min-h-[600px] max-w-lg mx-auto w-full px-6 py-8 justify-center">
+                        <div className="w-full bg-white/10 h-1 rounded-full mb-10 overflow-hidden shrink-0">
                             <div 
                                 className="bg-amber-400 h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(251,191,36,0.5)]"
                                 style={{ width: `${progress}%` }}
@@ -293,7 +291,7 @@
             };
 
             const CalculatingScreen = () => (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-8">
+                <div className="flex flex-col items-center justify-center h-screen text-center space-y-8">
                     <div className="relative">
                         <div className="w-20 h-20 border-2 border-white/10 border-t-amber-400 rounded-full animate-spin"></div>
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -310,33 +308,33 @@
                 if (!finalResult) return null;
 
                 return (
-                    <div className="flex flex-col h-full w-full max-w-md mx-auto px-4 py-4 overflow-y-auto custom-scrollbar">
-                        <div className="bg-[#161245] border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-6 md:p-8 relative overflow-hidden flex-none flex flex-col items-center text-center rounded-sm min-h-[500px]">
+                    <div className="flex flex-col w-full max-w-md mx-auto px-4 py-8">
+                        <div className="bg-[#161245] border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-6 relative overflow-hidden flex-none flex flex-col items-center text-center rounded-sm">
                             
                             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                             <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/20 rounded-full blur-[60px] opacity-40 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
 
-                            <div className="relative z-10 mb-4">
+                            <div className="relative z-10 mb-2">
                                 <p className="text-amber-500/70 text-xs tracking-[0.2em] font-serif uppercase pb-2 border-b border-amber-500/20">
                                     2025 我的父母旅程關鍵字
                                 </p>
                             </div>
 
                             <div className="relative z-10 mt-2 mb-4">
-                                <h1 className="text-[100px] md:text-[120px] leading-none font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 font-serif drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style={{ fontFamily: '"Noto Serif TC", serif' }}>
+                                <h1 className="text-[100px] leading-none font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 font-serif drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style={{ fontFamily: '"Noto Serif TC", serif' }}>
                                     {finalResult.word}
                                 </h1>
                             </div>
 
-                            <div className="relative z-10 space-y-5 w-full">
-                                <div className="space-y-2">
+                            <div className="relative z-10 space-y-4 w-full">
+                                <div className="space-y-1">
                                     <h3 className="text-xs font-bold text-indigo-300/50 uppercase tracking-[0.2em]">表層釋義</h3>
                                     <p className="text-indigo-100 font-serif text-lg tracking-wide">{finalResult.definition}</p>
                                 </div>
 
                                 <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent mx-auto opacity-50"></div>
 
-                                <div className="space-y-3">
+                                <div className="space-y-2">
                                     <h3 className="text-sm font-bold text-amber-500 uppercase tracking-widest flex items-center justify-center gap-2">
                                         <span className="w-1.5 h-1.5 bg-amber-500 rotate-45"></span> 育兒真相 <span className="w-1.5 h-1.5 bg-amber-500 rotate-45"></span>
                                     </h3>
@@ -361,7 +359,7 @@
                             </div>
                         </div>
 
-                        <div className="mt-6 flex flex-col gap-3 w-full pb-24">
+                        <div className="mt-6 flex flex-col gap-3 w-full pb-10">
                             <div className="flex gap-2">
                                 <button 
                                     onClick={() => alert("請手動截圖此畫面，或長按圖片儲存！")}
@@ -417,14 +415,14 @@
             };
 
             return (
-                <div className="w-full max-w-md h-[100dvh] md:h-[800px] bg-[#110c46] md:rounded-2xl md:shadow-2xl overflow-hidden relative flex flex-col mx-auto">
-                    <div className="absolute inset-0 pointer-events-none opacity-40" style={{ 
+                <div className="w-full max-w-md min-h-screen bg-[#110c46] relative flex flex-col mx-auto">
+                    <div className="absolute inset-0 pointer-events-none opacity-40 fixed" style={{ 
                         backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px)`,
                         backgroundSize: '30px 30px'
                     }}></div>
-                    <div className="absolute top-0 w-full h-64 bg-gradient-to-b from-[#1a1555] to-transparent opacity-50 pointer-events-none"></div>
+                    <div className="absolute top-0 w-full h-64 bg-gradient-to-b from-[#1a1555] to-transparent opacity-50 pointer-events-none fixed"></div>
                     
-                    <main className="flex-1 relative z-10 overflow-hidden">
+                    <main className="flex-1 relative z-10">
                         {gameState === 'start' && <StartScreen />}
                         {gameState === 'quiz' && <QuizScreen />}
                         {gameState === 'calculating' && <CalculatingScreen />}
