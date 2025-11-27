@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 我的父母旅程關鍵字</title>
+    
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 引入 React 和 ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- 引入 Babel 用來解析 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- 引入字型 Noto Serif TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #110c46;
+            color: #1c1917;
+        }
+        .font-serif {
+            font-family: 'Noto Serif TC', serif;
+        }
+        .writing-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- SVG 圖示元件 (取代 lucide-react) ---
+        const ChevronRight = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m9 18 6-6-6-6"/></svg>
+        );
+        const RefreshCw = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+        );
+        const Share2 = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        );
+        const Star = ({ size = 24, className = "", fill = "none" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        );
+        const Users = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        );
+        const Download = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        );
+        const LinkIcon = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        );
+
+        // --- 資料設定 ---
+        const questions = [
+            {
+                id: 1,
+                title: "晨之試煉",
+                question: "早上叫醒小孩，眼看快要遲到了，你的反應通常是？",
+                options: [
+                { text: "獅吼功全開：全家都聽得到我的咆哮。", type: "吼" },
+                { text: "放棄掙扎：遲到就遲到吧，幫他請假算了。", type: "空" },
+                { text: "極限操作：一邊穿衣一邊塞麵包，像特種部隊。", type: "忍" },
+                { text: "金錢誘惑：「趕快起來等等去超商買多發乳酸！」", type: "貧" }
+                ]
+            },
+            {
+                id: 2,
+                title: "食之修養",
+                question: "精心準備了晚餐，小孩卻說「我不要吃這個」，你會？",
+                options: [
+                { text: "深呼吸三次，告訴自己這是親生的，默默自己吃掉。", type: "忍" },
+                { text: "強迫餵食：不吃完不准下桌！", type: "吼" },
+                { text: "直接開一包海苔或香鬆給他配飯，有吃就好。", type: "空" },
+                { text: "立刻打開外送 App 點他想吃的。", type: "貧" }
+                ]
+            },
+            {
+                id: 3,
+                title: "夜之寧靜",
+                question: "好不容易把小孩哄睡了，這時你會做什麼？",
+                options: [
+                { text: "報復性熬夜，滑手機滑到眼瞎。", type: "空" },
+                { text: "終於可以處理白天沒做完的工作。", type: "渡" },
+                { text: "立刻網購清空購物車，撫慰心靈。", type: "貧" },
+                { text: "累到直接斷片，跟小孩一起昏迷。", type: "忍" }
+                ]
+            },
+            {
+                id: 4,
+                title: "財之流向",
+                question: "回顧今年，你的錢大多消失在哪裡？",
+                options: [
+                { text: "各種才藝班、補習費，投資未來。", type: "渡" },
+                { text: "玩具、衣服、帶去遊樂園，買快樂。", type: "貧" },
+                { text: "看醫生、買保健品，求個健康。", type: "忍" },
+                { text: "其實不知道花去哪了，但戶頭就是空的。", type: "空" }
+                ]
+            }
+        ];
+
+        const results = {
+            "忍": {
+                word: "韌",
+                definition: "柔軟卻有力量，彎而不折的生命姿態。",
+                truth: "面對育兒的挑戰，你總能包容與接納。這份不輕言放棄的溫柔，給了孩子最堅實的安全感。謝謝你，總是願意為了愛再試一次。",
+                advice: "你的堅定，是孩子探索世界最強的後盾。"
+            },
+            "空": {
+                word: "寬",
+                definition: "心寬天地寬，在混亂中看見寧靜。",
+                truth: "你學會了在不完美中找平衡，不再為瑣事糾結。這不是妥協，而是一種豁達的智慧。你讓孩子明白了，接納自己比完美更重要。",
+                advice: "放過自己，欣賞當下，就是最好的身教。"
+            },
+            "吼": {
+                word: "守",
+                definition: "堅定不移的守護，為愛設立溫暖的界線。",
+                truth: "雖然有時會著急、會大聲，但那都是因為太在乎。你努力教導孩子是非對錯，是他們成長路上最盡責的引路人。你的真性情，教會了孩子什麼是重視。",
+                advice: "你的每一次引導，都將成為孩子心中的光。"
+            },
+            "貧": {
+                word: "予",
+                definition: "毫無保留的給予，豐盛了彼此的生命。",
+                truth: "你總是把孩子放在第一位，用盡全力給他們最好的體驗。這些看似單向的付出，其實都化作了孩子心中最富足的養分。你的慷慨，是家裡最美的風景。",
+                advice: "你的付出，早已種下名為幸福的種子。"
+            },
+            "渡": {
+                word: "伴",
+                definition: "歲月長情，最珍貴的禮物是彼此陪伴。",
+                truth: "育兒是一場漫長的馬拉松，謝謝你始終沒有缺席。無論晴雨，你都堅定地站在孩子身旁。你的存在本身，就是孩子回頭時最溫暖的目光。",
+                advice: "只要在一起，就是最好的時光。"
+            }
+        };
+
+        function ParentKeywordQuiz() {
+            const [gameState, setGameState] = useState('start');
+            const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
+            const [scores, setScores] = useState({ "忍": 0, "空": 0, "吼": 0, "貧": 0, "渡": 0 });
+            const [finalResult, setFinalResult] = useState(null);
+
+            const handleAnswer = (type) => {
+                const newScores = { ...scores, [type]: scores[type] + 1 };
+                setScores(newScores);
+
+                if (currentQuestionIdx < questions.length - 1) {
+                    setCurrentQuestionIdx(currentQuestionIdx + 1);
+                } else {
+                    calculateResult(newScores);
+                }
+            };
+
+            const calculateResult = (finalScores) => {
+                setGameState('calculating');
+                let maxScore = -1;
+                let resultKey = "渡"; 
+
+                Object.keys(finalScores).forEach(key => {
+                    if (finalScores[key] > maxScore) {
+                        maxScore = finalScores[key];
+                        resultKey = key;
+                    }
+                });
+
+                setTimeout(() => {
+                    setFinalResult(results[resultKey]);
+                    setGameState('result');
+                }, 1500);
+            };
+
+            const restartQuiz = () => {
+                setGameState('start');
+                setCurrentQuestionIdx(0);
+                setScores({ "忍": 0, "空": 0, "吼": 0, "貧": 0, "渡": 0 });
+                setFinalResult(null);
+            };
+
+            const handleShare = async () => {
+                const url = window.location.href;
+                const shareData = {
+                    title: '2025 我的父母旅程關鍵字',
+                    text: '測測看你的 2025 育兒代表字是什麼？',
+                    url: url,
+                };
+
+                try {
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                    } else {
+                        throw new Error("Web Share API not supported");
+                    }
+                } catch (err) {
+                    if (err.name === 'AbortError' || err.toString().includes('Share canceled')) {
+                        return;
+                    }
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        alert("連結已複製！請貼給親朋好友");
+                    } catch (clipboardErr) {
+                        prompt("請複製以下連結分享：", url);
+                    }
+                }
+            };
+
+            // --- 畫面元件 ---
+            const StartScreen = () => (
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-12 animate-fade-in px-6">
+                    <div className="space-y-6">
+                        <h1 className="text-4xl md:text-5xl font-black text-white font-serif tracking-widest leading-relaxed drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                            父母年度<br/>
+                            <span className="text-amber-400 block mt-4 tracking-[0.3em] ml-3 text-5xl md:text-6xl">關鍵字</span>
+                        </h1>
+                        <div className="w-12 h-[2px] bg-amber-500/50 mx-auto rounded-full"></div>
+                    </div>
+                    
+                    <p className="text-indigo-200 font-serif leading-loose max-w-md text-lg tracking-wider">
+                        育兒是一場<span className="text-amber-200 border-b border-amber-500/30 pb-1 mx-1">修行</span>。<br/>
+                        在這充滿血淚與歡笑的一年裡，<br/>
+                        哪個字最能代表你的靈魂狀態？
+                    </p>
+
+                    <button 
+                        onClick={() => setGameState('quiz')}
+                        className="group relative px-10 py-4 bg-transparent border border-amber-400/30 text-amber-400 rounded-full hover:bg-amber-400 hover:text-[#110c46] transition-all duration-300 shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:shadow-[0_0_30px_rgba(251,191,36,0.4)]"
+                    >
+                        <span className="relative z-10 text-xl font-serif tracking-[0.2em] flex items-center gap-2 pl-1">
+                            開始測驗 <ChevronRight size={20}/>
+                        </span>
+                    </button>
+                </div>
+            );
+
+            const QuizScreen = () => {
+                const question = questions[currentQuestionIdx];
+                const progress = ((currentQuestionIdx + 1) / questions.length) * 100;
+
+                return (
+                    <div className="flex flex-col h-full max-w-lg mx-auto w-full px-6 py-8">
+                        <div className="w-full bg-white/10 h-1 rounded-full mb-10 overflow-hidden">
+                            <div 
+                                className="bg-amber-400 h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(251,191,36,0.5)]"
+                                style={{ width: `${progress}%` }}
+                            ></div>
+                        </div>
+
+                        <div className="flex-1 flex flex-col justify-center">
+                            <div className="mb-10 text-center md:text-left">
+                                <span className="inline-block px-3 py-1 bg-amber-400/10 border border-amber-400/20 text-amber-400 text-xs font-bold tracking-widest rounded-full mb-6">
+                                    Q{currentQuestionIdx + 1}
+                                </span>
+                                <h2 className="text-2xl md:text-3xl font-serif font-bold text-white leading-relaxed tracking-wide">
+                                    {question.question}
+                                </h2>
+                            </div>
+
+                            <div className="space-y-4">
+                                {question.options.map((option, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => handleAnswer(option.type)}
+                                        className="w-full p-6 text-left bg-white/5 border border-white/10 rounded-xl hover:bg-amber-400 hover:border-amber-400 hover:text-[#110c46] text-indigo-100 transition-all duration-300 group backdrop-blur-sm"
+                                    >
+                                        <span className="font-serif text-lg tracking-wide group-hover:font-bold">
+                                            {option.text}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+
+            const CalculatingScreen = () => (
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-8">
+                    <div className="relative">
+                        <div className="w-20 h-20 border-2 border-white/10 border-t-amber-400 rounded-full animate-spin"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <Star size={16} className="text-amber-400 animate-pulse" fill="currentColor"/>
+                        </div>
+                    </div>
+                    <p className="text-indigo-200 font-serif text-xl animate-pulse tracking-widest">
+                        凝神演算中...
+                    </p>
+                </div>
+            );
+
+            const ResultScreen = () => {
+                if (!finalResult) return null;
+
+                return (
+                    <div className="flex flex-col h-full w-full max-w-md mx-auto px-4 py-4 overflow-y-auto custom-scrollbar">
+                        <div className="bg-[#161245] border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-6 md:p-8 relative overflow-hidden flex-none flex flex-col items-center text-center rounded-sm min-h-[500px]">
+                            
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                            <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/20 rounded-full blur-[60px] opacity-40 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+
+                            <div className="relative z-10 mb-4">
+                                <p className="text-amber-500/70 text-xs tracking-[0.2em] font-serif uppercase pb-2 border-b border-amber-500/20">
+                                    2025 我的父母旅程關鍵字
+                                </p>
+                            </div>
+
+                            <div className="relative z-10 mt-2 mb-4">
+                                <h1 className="text-[100px] md:text-[120px] leading-none font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 font-serif drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style={{ fontFamily: '"Noto Serif TC", serif' }}>
+                                    {finalResult.word}
+                                </h1>
+                            </div>
+
+                            <div className="relative z-10 space-y-5 w-full">
+                                <div className="space-y-2">
+                                    <h3 className="text-xs font-bold text-indigo-300/50 uppercase tracking-[0.2em]">表層釋義</h3>
+                                    <p className="text-indigo-100 font-serif text-lg tracking-wide">{finalResult.definition}</p>
+                                </div>
+
+                                <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent mx-auto opacity-50"></div>
+
+                                <div className="space-y-3">
+                                    <h3 className="text-sm font-bold text-amber-500 uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="w-1.5 h-1.5 bg-amber-500 rotate-45"></span> 育兒真相 <span className="w-1.5 h-1.5 bg-amber-500 rotate-45"></span>
+                                    </h3>
+                                    <p className="text-white font-medium font-serif text-lg leading-loose tracking-wide px-2">
+                                        {finalResult.truth}
+                                    </p>
+                                </div>
+                                
+                                <div className="bg-white/5 p-4 text-left border border-white/10 relative overflow-hidden group hover:border-amber-500/30 transition-colors">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-amber-500/50"></div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-xs text-indigo-300 tracking-wider">心靈處方</span>
+                                        <span className="text-sm font-bold text-white text-right">{finalResult.advice}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="absolute bottom-4 right-4 opacity-90 transform rotate-[-8deg] mix-blend-screen">
+                                <div className="w-14 h-14 border-[3px] border-red-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+                                    <span className="text-red-600 font-bold font-serif text-xs writing-vertical drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]">一字<br/>入魂</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-6 flex flex-col gap-3 w-full pb-8">
+                            <div className="flex gap-2">
+                                <button 
+                                    onClick={() => alert("請手動截圖此畫面，或長按圖片儲存！")}
+                                    className="flex-[2] bg-amber-500 text-[#110c46] py-3 rounded-sm font-serif tracking-wider font-bold flex items-center justify-center gap-2 hover:bg-amber-400 transition-colors shadow-lg hover:shadow-amber-500/20 text-sm"
+                                >
+                                    <Download size={18} /> 下載/截圖保存
+                                </button>
+                                <button 
+                                    onClick={handleShare}
+                                    className="flex-[2] bg-indigo-600 text-white py-3 rounded-sm font-serif tracking-wider font-bold flex items-center justify-center gap-2 hover:bg-indigo-500 transition-colors shadow-lg text-sm"
+                                >
+                                    <Users size={18} /> 邀請親友
+                                </button>
+                                <button 
+                                    onClick={restartQuiz}
+                                    className="flex-1 bg-transparent text-amber-400 border border-amber-400/30 rounded-sm font-serif flex items-center justify-center gap-2 hover:bg-amber-400/10 transition-colors"
+                                    title="重測"
+                                >
+                                    <RefreshCw size={18} />
+                                </button>
+                            </div>
+                            
+                            <a 
+                                href="https://cplink.co/cgc4YWxi" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 w-full bg-indigo-50/5 border-l-4 border-amber-400 p-4 rounded-r-sm flex items-center justify-between group hover:bg-indigo-50/10 transition-all no-underline cursor-pointer overflow-hidden relative"
+                            >
+                                <div className="flex flex-col text-left space-y-1 pr-2 relative z-10">
+                                    <span className="text-xs text-indigo-300 tracking-wider font-medium">少點焦慮，多點陪伴，創造親子好生活</span>
+                                    <span className="text-lg font-bold font-serif text-white flex items-center gap-2 group-hover:text-amber-400 transition-colors">
+                                        訂閱親子天下 Premium <ChevronRight size={16} className="text-amber-500"/>
+                                    </span>
+                                </div>
+                                
+                                <div className="relative w-16 h-16 flex-shrink-0 flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-xl group-hover:bg-amber-400/30 transition-all"></div>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 text-amber-300 group-hover:scale-110 transition-transform duration-500">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                        <path d="M12 7.5c0 0 2-3.5 5-2.5 1.5.5 2 2.5 2 3.5 0 2.5-4 4.5-7 7.5-3-3-7-5-7-7.5 0-1 .5-3 2-3.5 3-1 5 2.5 5 2.5z" fill="#F59E0B" stroke="none" opacity="0.8" />
+                                    </svg>
+                                </div>
+                            </a>
+                            
+                            <p className="text-center text-indigo-300/40 text-xs mt-2 tracking-widest">
+                                <LinkIcon size={10} className="inline mr-1"/>
+                                點擊上方卡片前往訂閱
+                            </p>
+                        </div>
+                    </div>
+                );
+            };
+
+            return (
+                <div className="w-full max-w-md h-[100dvh] md:h-[800px] bg-[#110c46] md:rounded-2xl md:shadow-2xl overflow-hidden relative flex flex-col mx-auto">
+                    <div className="absolute inset-0 pointer-events-none opacity-40" style={{ 
+                        backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px)`,
+                        backgroundSize: '30px 30px'
+                    }}></div>
+                    <div className="absolute top-0 w-full h-64 bg-gradient-to-b from-[#1a1555] to-transparent opacity-50 pointer-events-none"></div>
+                    
+                    <main className="flex-1 relative z-10 overflow-hidden">
+                        {gameState === 'start' && <StartScreen />}
+                        {gameState === 'quiz' && <QuizScreen />}
+                        {gameState === 'calculating' && <CalculatingScreen />}
+                        {gameState === 'result' && <ResultScreen />}
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ParentKeywordQuiz />);
+    </script>
+</body>
+</html>
