@@ -323,7 +323,16 @@
                             scale: 2, // 提高解析度
                             backgroundColor: '#161245', // 確保背景色正確
                             useCORS: true,
-                            logging: false
+                            logging: false,
+                            onclone: (clonedDoc) => {
+                                // 在截圖時將漸層文字改為純色，避免透明問題
+                                const keywordElement = clonedDoc.getElementById('result-keyword');
+                                if (keywordElement) {
+                                    keywordElement.style.color = '#fbbf24'; // Amber-400 hex
+                                    keywordElement.style.backgroundImage = 'none';
+                                    keywordElement.style.webkitTextFillColor = 'initial';
+                                }
+                            }
                         });
                         
                         // 轉換為圖片連結
@@ -359,7 +368,7 @@
                             </div>
 
                             <div className="relative z-10 mt-2 mb-4">
-                                <h1 className="text-[100px] leading-none font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 font-serif drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style={{ fontFamily: '"Noto Serif TC", serif' }}>
+                                <h1 id="result-keyword" className="text-[100px] leading-none font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 font-serif drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" style={{ fontFamily: '"Noto Serif TC", serif' }}>
                                     {finalResult.word}
                                 </h1>
                             </div>
@@ -392,7 +401,16 @@
 
                             <div className="absolute bottom-4 right-4 opacity-90 transform rotate-[-8deg] mix-blend-screen">
                                 <div className="w-14 h-14 border-[3px] border-red-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.4)]">
-                                    <span className="text-red-600 font-bold font-serif text-xs writing-vertical drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]">一字<br/>入魂</span>
+                                    <div className="flex gap-1">
+                                         <div className="flex flex-col items-center leading-none">
+                                            <span className="text-red-600 font-bold font-serif text-xs drop-shadow-[0_0_2px_rgba(220,38,38,0.8)]">一</span>
+                                            <span className="text-red-600 font-bold font-serif text-xs drop-shadow-[0_0_2px_rgba(220,38,38,0.8)]">字</span>
+                                         </div>
+                                         <div className="flex flex-col items-center leading-none">
+                                            <span className="text-red-600 font-bold font-serif text-xs drop-shadow-[0_0_2px_rgba(220,38,38,0.8)]">入</span>
+                                            <span className="text-red-600 font-bold font-serif text-xs drop-shadow-[0_0_2px_rgba(220,38,38,0.8)]">魂</span>
+                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
