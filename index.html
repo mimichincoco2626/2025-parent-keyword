@@ -14,6 +14,9 @@
     
     <!-- 引入 Babel 用來解析 JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- 引入 html2canvas 用於圖片生成下載 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <!-- 引入字型 Noto Serif TC -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -46,7 +49,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
         // --- SVG 圖示元件 ---
         const ChevronRight = ({ size = 24, className = "" }) => (
@@ -305,11 +308,46 @@
             );
 
             const ResultScreen = () => {
+                const cardRef = useRef(null);
+                const [isDownloading, setIsDownloading] = useState(false);
+                
                 if (!finalResult) return null;
+
+                const handleDownload = async () => {
+                    if (!cardRef.current) return;
+                    setIsDownloading(true);
+                    
+                    try {
+                        // 使用 html2canvas 截取圖片
+                        const canvas = await html2canvas(cardRef.current, {
+                            scale: 2, // 提高解析度
+                            backgroundColor: '#161245', // 確保背景色正確
+                            useCORS: true,
+                            logging: false
+                        });
+                        
+                        // 轉換為圖片連結
+                        const image = canvas.toDataURL("image/png");
+                        
+                        // 建立下載連結並觸發點擊
+                        const link = document.createElement('a');
+                        link.href = image;
+                        link.download = `2025-parent-keyword-${finalResult.word}.png`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } catch (error) {
+                        console.error("下載失敗:", error);
+                        alert("下載發生錯誤，請嘗試使用手機截圖功能。");
+                    } finally {
+                        setIsDownloading(false);
+                    }
+                };
 
                 return (
                     <div className="flex flex-col w-full max-w-md mx-auto px-4 py-8">
-                        <div className="bg-[#161245] border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-6 relative overflow-hidden flex-none flex flex-col items-center text-center rounded-sm">
+                        {/* 加入 ref={cardRef} 讓程式知道要截取這個區塊 */}
+                        <div ref={cardRef} className="bg-[#161245] border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.5)] p-6 relative overflow-hidden flex-none flex flex-col items-center text-center rounded-sm">
                             
                             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                             <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/20 rounded-full blur-[60px] opacity-40 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
@@ -362,10 +400,11 @@
                         <div className="mt-6 flex flex-col gap-3 w-full pb-10">
                             <div className="flex gap-2">
                                 <button 
-                                    onClick={() => alert("請手動截圖此畫面，或長按圖片儲存！")}
-                                    className="flex-[2] bg-amber-500 text-[#110c46] py-3 rounded-sm font-serif tracking-wider font-bold flex items-center justify-center gap-2 hover:bg-amber-400 transition-colors shadow-lg hover:shadow-amber-500/20 text-sm"
+                                    onClick={handleDownload}
+                                    disabled={isDownloading}
+                                    className="flex-[2] bg-amber-500 text-[#110c46] py-3 rounded-sm font-serif tracking-wider font-bold flex items-center justify-center gap-2 hover:bg-amber-400 transition-colors shadow-lg hover:shadow-amber-500/20 text-sm disabled:opacity-50"
                                 >
-                                    <Download size={18} /> 下載/截圖保存
+                                    <Download size={18} /> {isDownloading ? "生成中..." : "下載圖卡"}
                                 </button>
                                 <button 
                                     onClick={handleShare}
